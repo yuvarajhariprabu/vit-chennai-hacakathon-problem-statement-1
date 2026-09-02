@@ -8,6 +8,8 @@ import LeftPanel from './LeftPanel'
 import AnimalShelf from './AnimalShelf'
 import MonkeyKingPopup from './MonkeyKingPopup'
 import GoldenKoiPopup from './GoldenKoiPopup'
+import SunMoonPopup from './SunMoonPopup'
+import GoldenKoi from './GoldenKoi'
 import StatusMessage from './StatusMessage'
 import './LoadingExperience.css'
 
@@ -18,8 +20,6 @@ const FOREST_ANIMALS = [
   { id: 3, name: 'Moss Frog',   emoji: '🐸', colorName: 'Green',  letter: 'G', color: '#22c55e', glow: '#16a34a' },
   { id: 4, name: 'Mystic Stag', emoji: '🦌', colorName: 'Blue',   letter: 'B', color: '#3b82f6', glow: '#2563eb' }
 ]
-
-
 
 const MESSAGES = [
   'ANCIENT FOREST AWAKENS…',
@@ -44,7 +44,6 @@ function randomPosition() {
 }
 
 // Pick a position that doesn't visually overlap any already-placed animal.
-// Each animal card is ~90px; we work in %-coords and keep a comfortable gap.
 const MIN_GAP_X = 16  // percent
 const MIN_GAP_Y = 20  // percent
 
@@ -57,7 +56,6 @@ function randomPositionNoOverlap(existing = [], attempts = 40) {
     )
     if (!tooClose) return candidate
   }
-  // All attempts failed (very crowded) — just return any position
   return randomPosition()
 }
 
@@ -100,11 +98,9 @@ export default function LoadingExperience({ onComplete }) {
   // Easter eggs
   const [showMonkeyKing, setShowMonkeyKing] = useState(false)
   const [showKoiPopup,   setShowKoiPopup]   = useState(false)
+  const [showSunMoonPopup, setShowSunMoonPopup] = useState(false)
   const [easterEggFound, setEasterEggFound] = useState(false)
   const [activeEasterEggs, setActiveEasterEggs] = useState([])
-
-  // Spirit easter egg popup
-  const [spiritMessage, setSpiritMessage] = useState(false)
 
   useEffect(() => { start() }, [start])
 
@@ -153,7 +149,11 @@ export default function LoadingExperience({ onComplete }) {
     catchLabelTimer.current = setTimeout(() => setCatchLabel(null), 1200)
     clearTimeout(comboTimer.current)
     comboTimer.current = setTimeout(() => setCombo(0), 2200)
-    setCollectedAnimals(prev => [...prev, animal])
+    setCollectedAnimals(prev => {
+      const next = [...prev, animal]
+      setTypedCode(next.map(a => a.letter).join(''))
+      return next
+    })
     setIsSwinging(true); setTimeout(() => setIsSwinging(false), 350)
   }, [catches, combo, bestCombo])
 
@@ -190,9 +190,19 @@ export default function LoadingExperience({ onComplete }) {
     })
   }, [])
 
-  // Sun → Moon toggle
+  // Easter eggs handler
+  const handleEasterEggTrigger = useCallback((type) => {
+    setActiveEasterEggs(prev => prev.includes(type) ? prev : [...prev, type])
+    setEasterEggFound(true)
+
+    if (type === 'koi')     setShowKoiPopup(true)
+    if (type === 'sunmoon') setShowSunMoonPopup(true)
+  }, [])
+
+  // Sun → Moon toggle (Sun Moon Founder Easter Egg)
   const handleSunClick = () => {
     if (sunPhase !== 'sun') return
+    handleEasterEggTrigger('sunmoon')
     setSunPhase('transitioning')
     setTimeout(() => {
       setSunPhase('moon')
@@ -201,18 +211,20 @@ export default function LoadingExperience({ onComplete }) {
   }
 
   const handleMoonClick = () => {
+    handleEasterEggTrigger('sunmoon')
     setSunPhase('sun')
     setIsNightMode(false)
   }
 
-  // Easter eggs
-  const handleEasterEggTrigger = useCallback((type) => {
-    setActiveEasterEggs(prev => prev.includes(type) ? prev : [...prev, type])
-    setEasterEggFound(true)
-
-    if (type === 'koi')    setShowKoiPopup(true)
-    if (type === 'spirit') { setSpiritMessage(true); setTimeout(() => setSpiritMessage(false), 4500) }
-  }, [])
+  // Golden Koi Catch Handler
+  const handleKoiCatch = useCallback(() => {
+    handleEasterEggTrigger('koi')
+    clearTimeout(catchLabelTimer.current)
+    setCatchLabel('✨ 🐟 GOLDEN KOI CAUGHT! ✨')
+    catchLabelTimer.current = setTimeout(() => setCatchLabel(null), 1500)
+    setIsSwinging(true)
+    setTimeout(() => setIsSwinging(false), 350)
+  }, [handleEasterEggTrigger])
 
   const handleLogoClick = useCallback(() => {
     setShowMonkeyKing(true)
@@ -223,11 +235,7 @@ export default function LoadingExperience({ onComplete }) {
 
   return (
     <div className="loading-root">
-      <RealisticForestBackground
-        progress={progress}
-        isNightMode={isNightMode}
-        onEasterEggTrigger={handleEasterEggTrigger}
-      />
+      <RealisticForestBackground />
 
       <LeftPanel
         collectedAnimals={collectedAnimals}
@@ -248,11 +256,18 @@ export default function LoadingExperience({ onComplete }) {
           <div className="hud-item">STREAK <span>{catches}</span></div>
         </div>
 
-        {/* ☀️ Sun / 🌙 Moon toggle button */}
+        {/* ☀️ Sun / 🌙 Moon toggle button (Sun Moon Founder Easter Egg) */}
         <div
           className={`sun-moon-btn phase-${sunPhase}`}
-          onClick={sunPhase === 'sun' ? handleSunClick : handleMoonClick}
-          title={sunPhase === 'sun' ? 'Touch the Sun…' : 'Restore Daylight'}
+          onClick={(e) => {
+            e.stopPropagation()
+            if (sunPhase === 'sun') {
+              handleSunClick()
+            } else {
+              handleMoonClick()
+            }
+          }}
+          title={sunPhase === 'sun' ? 'Touch the Sun — Sun Moon Founder!' : 'Restore Daylight'}
         >
           {sunPhase === 'sun' ? '☀️' : sunPhase === 'transitioning' ? '🌅' : '🌙'}
         </div>
@@ -275,7 +290,20 @@ export default function LoadingExperience({ onComplete }) {
           />
         ))}
 
-        {screenAnimals.length === 0 && collectedAnimals.length < 5 && (
+        {/* Interactive Golden Koi swimming in the river */}
+        <GoldenKoi onCatch={handleKoiCatch} />
+
+        {/* Final 5 Seconds Dramatic Countdown on Main Display */}
+        {remaining <= 5 && remaining > 0 && (
+          <div className="main-display-countdown" key={remaining}>
+            <div className="countdown-glow-burst" />
+            <div className="countdown-header-tag">⚠️ FINAL SECONDS!</div>
+            <div className="countdown-main-num">{remaining}</div>
+            <div className="countdown-sub-tag">HURRY — TIME IS RUNNING OUT!</div>
+          </div>
+        )}
+
+        {screenAnimals.length === 0 && collectedAnimals.length < 5 && remaining > 5 && (
           <div className="center-idle-hint">👁 Watch for animals popping out of the hourglass…</div>
         )}
 
@@ -315,15 +343,7 @@ export default function LoadingExperience({ onComplete }) {
       {/* ─── Easter Egg Popups ──────────────────────────── */}
       <MonkeyKingPopup show={showMonkeyKing} onClose={() => setShowMonkeyKing(false)} />
       <GoldenKoiPopup  show={showKoiPopup}   onClose={() => setShowKoiPopup(false)} />
-
-      {/* Tree Guardian Spirit popup */}
-      {spiritMessage && (
-        <div className="easter-popup spirit-popup">
-          <div className="ep-fish">🦌🌲✨</div>
-          <div className="ep-title">TREE GUARDIAN AWAKENED!</div>
-          <div className="ep-sub">The ancient spirit of the forest reveals itself.<br/>The trees bow as the Guardian blesses your quest!</div>
-        </div>
-      )}
+      <SunMoonPopup    show={showSunMoonPopup} onClose={() => setShowSunMoonPopup(false)} />
     </div>
   )
 }

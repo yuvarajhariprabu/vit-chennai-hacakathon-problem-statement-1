@@ -5,21 +5,33 @@ export default function CompletionScreen({ stats, onRestart }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 200)
+    const t = setTimeout(() => setVisible(true), 150)
     return () => clearTimeout(t)
   }, [])
 
   return (
     <div className={`completion-root ${visible ? 'show' : ''}`}>
-      {/* Particle burst - CSS-only */}
-      <div className="burst-ring ring1" />
-      <div className="burst-ring ring2" />
-      <div className="burst-ring ring3" />
+      {/* Photorealistic Grassland Forest Background Layer */}
+      <div
+        className="comp-grassland-photo"
+        style={{ backgroundImage: `url('/grassland_bg.jpg')` }}
+      />
+
+      {/* Sunbeams & Ambient Lighting Overlay */}
+      <div className="comp-sun-rays" />
+      <div className="comp-vignette" />
+
+      {/* Floating Meadow Sparkles & Dandelion Seeds */}
+      <div className="comp-meadow-particles">
+        {Array.from({ length: 16 }).map((_, i) => (
+          <span key={i} className={`m-particle p-${i % 5}`}>🌿</span>
+        ))}
+      </div>
 
       <div className="completion-card">
-        <div className="comp-badge">✦</div>
-        <h1 className="comp-title">SYSTEM READY</h1>
-        <p className="comp-sub">60 SECONDS COMPLETE</p>
+        <div className="comp-badge">🌲</div>
+        <h1 className="comp-title">SANCTUARY PRESERVED</h1>
+        <p className="comp-sub">60 SECONDS COMPLETE • ANCIENT HARMONY RESTORED</p>
 
         <div className="comp-divider" />
 
@@ -29,8 +41,8 @@ export default function CompletionScreen({ stats, onRestart }) {
             <span className="cs-label">CATCHES</span>
           </div>
           <div className="comp-stat">
-            <span className="cs-value">{stats.animalsRescued ?? stats.rocksCollected ?? 5}/5</span>
-            <span className="cs-label">ANIMALS</span>
+            <span className="cs-value">{stats.animalsRescued ?? 5}/5</span>
+            <span className="cs-label">ANIMALS RESCUED</span>
           </div>
           <div className="comp-stat">
             <span className="cs-value">×{stats.bestCombo || 1}</span>
@@ -43,13 +55,13 @@ export default function CompletionScreen({ stats, onRestart }) {
         </div>
 
         {stats.easterEgg && (
-          <div className="comp-secret">⚡ OMEGA CLEARANCE ACHIEVED</div>
+          <div className="comp-secret">✨ ANCIENT FOREST GUARDIAN CLEARANCE ACHIEVED ✨</div>
         )}
 
         <div className="comp-divider" />
 
         <button className="comp-btn" onClick={onRestart}>
-          <span>ENTER EXPERIENCE</span>
+          <span>🌿 ENTER FOREST SANCTUARY 🌿</span>
           <div className="btn-glow" />
         </button>
       </div>

@@ -523,8 +523,14 @@ export default function Hourglass({ progress, remaining, compact = false }) {
   return (
     <div className={`hourglass-wrap ${compact ? 'compact' : ''}`}>
       <canvas ref={canvasRef} className="hourglass-canvas" />
-      <div className={`timer-display ${remaining <= 10 ? 'urgent' : ''} ${compact ? 'compact' : ''}`}>
-        {remaining}
+      <div className={`hourglass-timer-block ${compact ? 'compact' : ''}`}>
+        <div className="hourglass-loading-label">
+          <span className="loading-pulsing-dot" />
+          <span>LOADING</span>
+        </div>
+        <div className={`timer-display ${remaining <= 10 ? 'urgent' : ''} ${compact ? 'compact' : ''}`}>
+          {remaining}s
+        </div>
       </div>
       <div className={`progress-bar-wrap ${compact ? 'compact' : ''}`}>
         <div className="progress-bar" style={{ width: `${progress * 100}%` }} />

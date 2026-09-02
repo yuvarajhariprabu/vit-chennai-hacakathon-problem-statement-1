@@ -1,12 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import './RealisticForestBackground.css'
 
-export default function RealisticForestBackground({ progress, isNightMode, onEasterEggTrigger }) {
+export default function RealisticForestBackground() {
   const canvasRef = useRef(null)
-  const [koiJumping, setKoiJumping] = useState(false)
-  const [spiritVisible, setSpiritVisible] = useState(false)
-  const [koiPos, setKoiPos] = useState({ x: 0.4, y: 0.82 })  // fraction of W,H
-  const koiPosRef = useRef({ x: 0.4, y: 0.82 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -176,10 +172,10 @@ export default function RealisticForestBackground({ progress, isNightMode, onEas
         ctx.fill()
       })
 
-      // 5. Water Shimmer on the bottom stream (rendered BEFORE the fish)
+      // 5. Water Shimmer on the bottom stream
       const streamY = H * 0.76
       const streamH = H * 0.22
-      for (let s = 0; s < 10; s++) {
+      for (let s = 0; s < 12; s++) {
         const sx = ((s * (W / 8) + t * 40) % (W + 120)) - 60
         const sy = streamY + (s % 4) * (streamH / 4) + Math.sin(t * 2 + s) * 4
         ctx.save()
@@ -190,188 +186,21 @@ export default function RealisticForestBackground({ progress, isNightMode, onEas
         ctx.restore()
       }
 
-      // 6. Golden Koi — visible in the water, swims lazily
-      const koiX = W * 0.32 + Math.sin(t * 0.28) * W * 0.22
-      const koiY = streamY + streamH * 0.38 + Math.cos(t * 0.45) * streamH * 0.20
-      const koiAngle = Math.atan2(
-        Math.cos(t * 0.45) * streamH * 0.20 * 0.45,
-        Math.cos(t * 0.28) * W * 0.22 * 0.28
-      )
-
-      // Update shared ref for click hitzone
-      koiPosRef.current = { x: koiX / W, y: koiY / H, angle: koiAngle }
-
-      ctx.save()
-      ctx.translate(koiX, koiY)
-      ctx.rotate(koiAngle)
-
-      // Golden glow aura behind the fish
-      const glowR = ctx.createRadialGradient(0, 0, 5, 0, 0, 55)
-      glowR.addColorStop(0,   `rgba(255, 200, 30, ${0.45 + Math.sin(t * 1.8) * 0.12})`)
-      glowR.addColorStop(0.5, `rgba(220, 150, 10, ${0.20 + Math.sin(t * 1.8) * 0.06})`)
-      glowR.addColorStop(1,   'rgba(180, 100, 0, 0.0)')
-      ctx.beginPath()
-      ctx.ellipse(0, 0, 55, 22, 0, 0, Math.PI * 2)
-      ctx.fillStyle = glowR
-      ctx.fill()
-
-      // Body — bright golden
-      ctx.globalAlpha = 0.82 + Math.sin(t * 1.2) * 0.06
-      const bodyGrd = ctx.createLinearGradient(-40, 0, 40, 0)
-      bodyGrd.addColorStop(0,    'rgba(180,110, 5, 0.0)')
-      bodyGrd.addColorStop(0.12, 'rgba(255,190,20, 1.0)')
-      bodyGrd.addColorStop(0.45, 'rgba(255,220,60, 1.0)')
-      bodyGrd.addColorStop(0.78, 'rgba(240,170,15, 1.0)')
-      bodyGrd.addColorStop(1,    'rgba(160, 90, 5, 0.0)')
-      ctx.beginPath()
-      ctx.ellipse(0, 0, 40, 14, 0, 0, Math.PI * 2)
-      ctx.fillStyle = bodyGrd
-      ctx.fill()
-
-      // Scale arcs
-      ctx.strokeStyle = 'rgba(160, 80, 0, 0.5)'
-      ctx.lineWidth = 1
-      for (let sc = -4; sc <= 4; sc++) {
-        ctx.beginPath()
-        ctx.arc(sc * 8, 0, 7, 0, Math.PI)
-        ctx.stroke()
-      }
-
-      // Orange blotch
-      ctx.beginPath()
-      ctx.ellipse(6, -4, 14, 6, 0, 0, Math.PI * 2)
-      ctx.fillStyle = 'rgba(220, 70, 10, 0.55)'
-      ctx.fill()
-
-      // Dorsal fin
-      ctx.beginPath()
-      ctx.moveTo(-10, -14)
-      ctx.quadraticCurveTo(4, -26, 18, -16)
-      ctx.strokeStyle = 'rgba(255, 180, 20, 0.75)'
-      ctx.lineWidth = 2
-      ctx.lineCap = 'round'
-      ctx.stroke()
-
-      // Tail fin (forked)
-      ctx.beginPath()
-      ctx.moveTo(-36, 0)
-      ctx.quadraticCurveTo(-52, -10, -58, -18)
-      ctx.moveTo(-36, 0)
-      ctx.quadraticCurveTo(-52, 10, -58, 18)
-      ctx.strokeStyle = 'rgba(255, 170, 10, 0.8)'
-      ctx.lineWidth = 2.5
-      ctx.stroke()
-
-      // Whiskers
-      ctx.beginPath()
-      ctx.moveTo(36, -4)
-      ctx.quadraticCurveTo(48, -10, 54, -8)
-      ctx.moveTo(36, 4)
-      ctx.quadraticCurveTo(48, 10, 54, 8)
-      ctx.strokeStyle = 'rgba(200, 140, 0, 0.65)'
-      ctx.lineWidth = 1.2
-      ctx.stroke()
-
-      // Eye
-      ctx.beginPath()
-      ctx.arc(30, -5, 3, 0, Math.PI * 2)
-      ctx.fillStyle = '#111'
-      ctx.fill()
-      ctx.beginPath()
-      ctx.arc(31, -6, 1.2, 0, Math.PI * 2)
-      ctx.fillStyle = 'rgba(255,255,255,0.8)'
-      ctx.fill()
-
-      ctx.globalAlpha = 1
-      ctx.restore()
-
-      // Ripple ring around the fish (pulses so player notices it)
-      const rippleAlpha = (Math.sin(t * 2.5) * 0.5 + 0.5) * 0.5
-      ctx.save()
-      ctx.beginPath()
-      ctx.ellipse(koiX, koiY, 60 + Math.sin(t * 2.5) * 6, 24 + Math.sin(t * 2.5) * 3, koiAngle, 0, Math.PI * 2)
-      ctx.strokeStyle = `rgba(255, 210, 50, ${rippleAlpha})`
-      ctx.lineWidth = 2
-      ctx.stroke()
-      ctx.restore()
-
       animationFrameId = requestAnimationFrame(render)
     }
-
-    // Add direct canvas click listener — properly scales CSS display coords
-    // to internal canvas resolution coords
-    const handleCanvasClick = (e) => {
-      const rect = canvas.getBoundingClientRect()
-      // Scale factor: canvas internal size vs CSS displayed size
-      const scaleX = canvas.width  / rect.width
-      const scaleY = canvas.height / rect.height
-      const mx = (e.clientX - rect.left) * scaleX
-      const my = (e.clientY - rect.top)  * scaleY
-      const kx = koiPosRef.current.x * canvas.width
-      const ky = koiPosRef.current.y * canvas.height
-      const dist = Math.sqrt((mx - kx) ** 2 + (my - ky) ** 2)
-
-      if (dist < 70) {  // 70px hit radius in canvas space
-        setKoiJumping(true)
-        onEasterEggTrigger?.('koi')
-        setTimeout(() => setKoiJumping(false), 3000)
-      }
-    }
-    canvas.style.pointerEvents = 'auto'
-    canvas.addEventListener('click', handleCanvasClick)
 
     animationFrameId = requestAnimationFrame(render)
 
     return () => {
       cancelAnimationFrame(animationFrameId)
-      canvas.removeEventListener('click', handleCanvasClick)
       window.removeEventListener('resize', resizeCanvas)
     }
   }, [])
 
-  // Trigger tree spirit easter egg
-  const handleTreeClick = () => {
-    if (!spiritVisible) {
-      setSpiritVisible(true)
-      onEasterEggTrigger?.('spirit')
-      setTimeout(() => setSpiritVisible(false), 3500)
-    }
-  }
-
   return (
     <div className="realistic-forest-wrap">
-      {/* High-definition photorealistic forest background layer with camera drift */}
+      {/* High-definition photorealistic forest background layer */}
       <div className="forest-photo-layer" style={{ backgroundImage: `url('/forest_bg.jpg')` }} />
-
-      {/* Interactive Easter Egg Hotspot: Ancient Tree Hollow — Tree Guardian */}
-      <div
-        className="easter-egg-hotspot tree-hollow"
-        onClick={(e) => {
-          e.stopPropagation()
-          handleTreeClick()
-        }}
-        title="🌲 Ancient Tree Hollow — something stirs inside…"
-      >
-        <span className="hollow-sparkle">🌲</span>
-        <span className="hollow-label">TREE GUARDIAN</span>
-      </div>
-
-      {/* Animated Forest Spirit Easter Egg Reveal */}
-      {spiritVisible && (
-        <div className="forest-spirit-reveal">
-          <div className="spirit-avatar">🦌✨</div>
-          <div className="spirit-text">MYSTIC FOREST GUARDIAN AWAKENED!</div>
-          <div className="spirit-sub">Secret Ancient Blessing Unlocked</div>
-        </div>
-      )}
-
-      {/* Animated Golden Koi Leap Easter Egg */}
-      {koiJumping && (
-        <div className="koi-leap-animation">
-          <div className="koi-body">🐟✨</div>
-          <div className="koi-splash" />
-        </div>
-      )}
 
       {/* Dynamic Canvas with God rays, Fireflies, Mist & River Shimmer */}
       <canvas ref={canvasRef} className="forest-canvas-overlay" />

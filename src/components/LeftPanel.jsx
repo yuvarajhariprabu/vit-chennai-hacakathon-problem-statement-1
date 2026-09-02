@@ -126,9 +126,9 @@ export default function LeftPanel({
             <span>🐵 Monkey Fever</span>
             <span className="easter-status">{activeEasterEggs.includes('monkey') ? '✅ FOUND' : 'Click the logo'}</span>
           </div>
-          <div className={`easter-item ${activeEasterEggs.includes('spirit') ? 'unlocked' : ''}`}>
-            <span>🦌 Tree Guardian</span>
-            <span className="easter-status">{activeEasterEggs.includes('spirit') ? '✅ FOUND' : 'Click the tree hollow'}</span>
+          <div className={`easter-item ${activeEasterEggs.includes('sunmoon') ? 'unlocked' : ''}`}>
+            <span>☀️ Sun Moon Founder</span>
+            <span className="easter-status">{activeEasterEggs.includes('sunmoon') ? '✅ FOUND' : 'Click the sun'}</span>
           </div>
           <div className={`easter-item koi-egg-item ${activeEasterEggs.includes('koi') ? 'unlocked koi-found' : ''}`}>
             <span>🐟 Golden Koi</span>
