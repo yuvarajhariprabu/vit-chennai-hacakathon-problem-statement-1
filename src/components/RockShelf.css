@@ -1,0 +1,167 @@
+.rock-shelf {
+  width: 160px;
+  min-width: 150px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 12px 28px;
+  background: rgba(2, 10, 4, 0.78);
+  border-left: 1px solid rgba(34,197,94,0.12);
+  backdrop-filter: blur(18px);
+  z-index: 50;
+  flex-shrink: 0;
+  box-shadow: -4px 0 40px rgba(0,10,0,0.6);
+}
+
+.shelf-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(100,116,139,0.6);
+  margin-bottom: 24px;
+}
+
+/* ── Board + slots ── */
+.shelf-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.shelf-slots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.shelf-slot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.shelf-slot.empty {
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.08);
+}
+
+.shelf-slot.filled {
+  background: transparent;
+  border: none;
+}
+
+.slot-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: rgba(71,85,105,0.35);
+}
+
+/* ── Shelf rock ── */
+.shelf-rock {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50% 45% 50% 45% / 48% 50% 48% 50%;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  animation: rockLand 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes rockLand {
+  0%   { transform: scale(0) rotate(-30deg) translateY(-30px); opacity: 0; }
+  60%  { transform: scale(1.15) rotate(5deg) translateY(4px); opacity: 1; }
+  80%  { transform: scale(0.95) rotate(-2deg) translateY(-2px); }
+  100% { transform: scale(1) rotate(0deg) translateY(0); opacity: 1; }
+}
+
+.shelf-rock-letter {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 1;
+}
+
+.shelf-rock-shine {
+  position: absolute;
+  top: 10%; left: 15%;
+  width: 35%; height: 25%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Shelf plank ── */
+.shelf-plank {
+  width: calc(100% + 16px);
+  margin-top: 8px;
+}
+
+.plank-top {
+  height: 12px;
+  background: linear-gradient(180deg, #92400e 0%, #78350f 40%, #92400e 100%);
+  border-radius: 2px 2px 0 0;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.12),
+    0 2px 8px rgba(0,0,0,0.5);
+}
+
+.plank-edge {
+  height: 5px;
+  background: linear-gradient(180deg, #78350f, #451a03);
+  border-radius: 0 0 2px 2px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.6);
+}
+
+/* ── Count ── */
+.shelf-count {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin-top: 18px;
+}
+.sc-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px; font-weight: 700;
+  color: #4ade80;
+  text-shadow: 0 0 14px rgba(74,222,128,0.7);
+  line-height: 1;
+}
+.sc-sep { font-family: 'Inter', sans-serif; font-size: 16px; color: rgba(100,116,139,0.5); }
+.sc-max { font-family: 'Orbitron', sans-serif; font-size: 14px; color: rgba(100,116,139,0.5); }
+
+.shelf-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: rgba(71,85,105,0.6);
+  margin-top: 4px;
+}
+
+/* ── Code preview ── */
+.shelf-code-preview {
+  margin-top: 24px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.code-char {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}

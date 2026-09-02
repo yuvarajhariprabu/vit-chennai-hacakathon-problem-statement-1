@@ -1,0 +1,163 @@
+.catching-net-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 999;
+  transform-origin: 30px 40px;
+  will-change: transform;
+}
+
+/* Swing scoop animation when user clicks or catches */
+.catching-net-wrap.swing {
+  animation: netScoop 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes netScoop {
+  0% {
+    transform-origin: 20px 40px;
+    rotate: 0deg;
+    scale: 1;
+  }
+  30% {
+    rotate: -40deg;
+    scale: 1.15;
+    translate: -10px -15px;
+  }
+  60% {
+    rotate: 35deg;
+    scale: 1.25;
+    translate: 15px 10px;
+  }
+  85% {
+    rotate: -8deg;
+    scale: 1.05;
+  }
+  100% {
+    rotate: 0deg;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+/* Bamboo wooden handle */
+.net-handle {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  width: 10px;
+  height: 75px;
+  background: linear-gradient(90deg, #5c2d0e 0%, #a0682e 40%, #d49b4b 60%, #5c2d0e 100%);
+  border-radius: 4px;
+  transform: rotate(42deg);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5), inset 1px 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.handle-wrap-grip {
+  position: absolute;
+  bottom: 6px;
+  left: -1px;
+  right: -1px;
+  height: 28px;
+  background: repeating-linear-gradient(
+    45deg,
+    #1f2937,
+    #1f2937 3px,
+    #111827 3px,
+    #111827 6px
+  );
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.handle-ring {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  height: 6px;
+  background: linear-gradient(90deg, #ca8a04, #fef08a, #ca8a04);
+  border-radius: 2px;
+}
+
+/* Net Hoop */
+.net-hoop {
+  position: absolute;
+  top: -55px;
+  left: -48px;
+  width: 76px;
+  height: 76px;
+  transform: rotate(-15deg);
+}
+
+.net-rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 4px solid #d49b4b;
+  box-shadow: 0 0 10px rgba(212, 155, 75, 0.5), inset 0 0 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Net woven mesh bag */
+.net-bag {
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  width: 64px;
+  height: 80px;
+  border-radius: 30% 30% 60% 60% / 40% 40% 60% 60%;
+  background: radial-gradient(ellipse at 50% 30%, rgba(200, 250, 220, 0.25) 0%, rgba(74, 222, 128, 0.15) 60%, rgba(34, 197, 94, 0.3) 100%);
+  border: 1px dashed rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(74, 222, 128, 0.25);
+  animation: netWave 3s ease-in-out infinite alternate;
+  transform-origin: top center;
+}
+
+@keyframes netWave {
+  0% { transform: rotate(-3deg) scaleX(0.98); }
+  100% { transform: rotate(4deg) scaleX(1.02); }
+}
+
+.net-mesh-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(45deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.net-inner-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 60%, rgba(134, 239, 172, 0.3) 0%, transparent 70%);
+}
+
+/* Trailing sparkles */
+.net-sparkle-trail {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  color: #fde047;
+  font-size: 14px;
+  text-shadow: 0 0 8px #ca8a04;
+  opacity: 0.8;
+  animation: sparkleFloat 1.2s ease-in-out infinite alternate;
+}
+
+.sparkle.s1 { top: -10px; left: 10px; animation-delay: 0s; }
+.sparkle.s2 { top: 20px; left: -15px; font-size: 10px; animation-delay: 0.4s; }
+.sparkle.s3 { top: 40px; left: 30px; font-size: 12px; animation-delay: 0.8s; }
+
+@keyframes sparkleFloat {
+  0% { transform: scale(0.7) translateY(0); opacity: 0.3; }
+  100% { transform: scale(1.3) translateY(-8px); opacity: 1; }
+}

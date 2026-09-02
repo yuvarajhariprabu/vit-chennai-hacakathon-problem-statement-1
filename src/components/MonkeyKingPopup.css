@@ -1,0 +1,165 @@
+.mk-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  animation: mkFadeIn 0.3s ease forwards;
+}
+
+@keyframes mkFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.mk-card {
+  position: relative;
+  background: linear-gradient(145deg, #1a0a00, #2d1200, #1a0a00);
+  border: 2px solid #ca8a04;
+  border-radius: 24px;
+  padding: 32px 36px;
+  max-width: 460px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow:
+    0 0 60px rgba(202, 138, 4, 0.5),
+    0 0 120px rgba(202, 138, 4, 0.2),
+    inset 0 0 40px rgba(120, 50, 0, 0.3);
+  animation: mkCardPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes mkCardPop {
+  0% { transform: scale(0.5) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(1.06) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Floating crown */
+.mk-crown {
+  font-size: 48px;
+  line-height: 1;
+  animation: crownBob 1.5s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.9));
+}
+
+@keyframes crownBob {
+  0% { transform: translateY(0) rotate(-5deg) scale(1); }
+  100% { transform: translateY(-10px) rotate(5deg) scale(1.1); }
+}
+
+/* Monkey Image */
+.mk-img-frame {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ca8a04;
+  box-shadow: 0 0 30px rgba(202, 138, 4, 0.6), 0 0 60px rgba(202, 138, 4, 0.2);
+}
+
+.mk-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mk-img-shine {
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  animation: shineSlide 3s ease-in-out infinite;
+}
+
+@keyframes shineSlide {
+  0% { left: -60%; }
+  100% { left: 120%; }
+}
+
+/* Title */
+.mk-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-align: center;
+  background: linear-gradient(135deg, #fde047, #f59e0b, #d97706, #fde047);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200%;
+  animation: goldShimmer 2s linear infinite;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
+}
+
+.mk-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(253, 224, 71, 0.85);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Banana row */
+.mk-bananas {
+  font-size: 24px;
+  letter-spacing: 4px;
+  animation: bananaWave 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes bananaWave {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.12); filter: brightness(1.4) drop-shadow(0 0 8px rgba(253, 224, 71, 0.9)); }
+}
+
+/* Close button */
+.mk-close-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #1a0a00;
+  background: linear-gradient(135deg, #fde047, #f59e0b, #d97706);
+  border: none;
+  border-radius: 20px;
+  padding: 12px 28px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(202, 138, 4, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mk-close-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px rgba(202, 138, 4, 0.9);
+}
+
+/* Corner sparkles */
+.mk-sparkle {
+  position: absolute;
+  font-size: 20px;
+  animation: sparkleRotate 3s linear infinite;
+}
+
+.mk-sparkle.tl { top: 12px; left: 14px; animation-delay: 0s; }
+.mk-sparkle.tr { top: 12px; right: 14px; animation-delay: 0.75s; }
+.mk-sparkle.bl { bottom: 12px; left: 14px; animation-delay: 1.5s; }
+.mk-sparkle.br { bottom: 12px; right: 14px; animation-delay: 2.25s; }
+
+@keyframes sparkleRotate {
+  0%, 100% { opacity: 0.3; transform: scale(0.7) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.3) rotate(180deg); }
+}

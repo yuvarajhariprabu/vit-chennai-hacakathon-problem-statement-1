@@ -1,0 +1,459 @@
+.left-panel {
+  width: 290px;
+  min-width: 270px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px 20px;
+  background: rgba(2, 10, 4, 0.84);
+  border-right: 1px solid rgba(74, 222, 128, 0.18);
+  backdrop-filter: blur(20px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  z-index: 50;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 6px 0 45px rgba(0, 8, 2, 0.7);
+}
+
+.left-panel::-webkit-scrollbar {
+  display: none;
+}
+
+/* 1. Website Name: CODE MONKEY */
+.lp-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lp-brand:hover {
+  transform: scale(1.03);
+}
+
+.lp-monkey {
+  font-size: 38px;
+  line-height: 1;
+  filter: drop-shadow(0 0 12px rgba(74, 222, 128, 0.8));
+  animation: monkeyBounce 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes monkeyBounce {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-4deg); }
+  100% { transform: translateY(2px) rotate(3deg); }
+}
+
+.lp-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.lp-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #86efac 50%, #22c55e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.lp-tagline {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  color: rgba(134, 239, 172, 0.7);
+  margin-top: 3px;
+}
+
+/* Divider */
+.lp-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.3), transparent);
+  margin: 14px 0;
+}
+
+/* 2. 2 - 3 lines description box */
+.lp-description-box {
+  background: rgba(6, 24, 12, 0.45);
+  border: 1px solid rgba(74, 222, 128, 0.15);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.lp-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: rgba(220, 245, 230, 0.85);
+}
+
+.lp-desc strong {
+  color: #86efac;
+  font-weight: 700;
+}
+
+/* 3. Section & Color Sequence */
+.lp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lp-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lp-section-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  color: #86efac;
+}
+
+.lp-badge-live {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.15);
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.lp-color-sequence {
+  display: flex;
+  gap: 8px;
+  min-height: 44px;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+}
+
+.lp-empty-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.6);
+  font-style: italic;
+}
+
+.color-pip-node {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  animation: pipAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pipAppear {
+  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.pip-emoji {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.pip-char {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Input container */
+.lp-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lp-input-guide {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: rgba(200, 235, 215, 0.7);
+  font-weight: 500;
+}
+
+.lp-input-wrapper {
+  position: relative;
+}
+
+.lp-code-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(0, 20, 8, 0.6);
+  border: 1.5px solid rgba(74, 222, 128, 0.35);
+  border-radius: 12px;
+  color: #86efac;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  caret-color: #4ade80;
+}
+
+.lp-code-input::placeholder {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(148, 163, 184, 0.45);
+}
+
+.lp-code-input:focus {
+  border-color: #4ade80;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+  background: rgba(0, 30, 12, 0.7);
+}
+
+.lp-code-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lp-code-input.cracked-success {
+  border-color: #22c55e;
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+  color: #4ade80;
+}
+
+.success-badge-mark {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #22c55e;
+  font-size: 20px;
+  font-weight: 900;
+  animation: badgePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgePop {
+  0% { transform: translateY(-50%) scale(0); }
+  100% { transform: translateY(-50%) scale(1); }
+}
+
+/* Feedback Tokens */
+.lp-letter-feedback-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.feedback-token {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  animation: tokenIn 0.25s ease;
+}
+
+@keyframes tokenIn {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.feedback-token.match {
+  background: rgba(34, 197, 94, 0.25);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.6);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+}
+
+.feedback-token.mismatch {
+  background: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+/* Victory banner */
+.lp-victory-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.25);
+  animation: victoryIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes victoryIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.victory-icon {
+  font-size: 22px;
+}
+
+.victory-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  color: #4ade80;
+  letter-spacing: 1.5px;
+}
+
+.victory-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.5px;
+  color: rgba(220, 255, 230, 0.8);
+}
+
+/* Easter Egg tracker */
+.lp-easter-eggs-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lp-easter-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8.5px;
+  letter-spacing: 2px;
+  color: #fbbf24;
+  font-weight: 800;
+}
+
+.lp-easter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.easter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  color: rgba(148, 163, 184, 0.7);
+  padding: 5px 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.easter-item.unlocked {
+  background: rgba(251, 191, 36, 0.15);
+  border-color: rgba(251, 191, 36, 0.4);
+  color: #fde047;
+}
+
+.easter-status {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 7.5px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: rgba(148, 163, 184, 0.5);
+}
+
+.easter-item.unlocked .easter-status {
+  color: #4ade80;
+}
+
+/* Omega Secret */
+.lp-omega-secret {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8.5px;
+  letter-spacing: 1.5px;
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+  margin-top: 8px;
+  text-align: center;
+  padding: 6px;
+  background: rgba(251, 191, 36, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  animation: omegaGlow 1.5s ease infinite alternate;
+}
+
+@keyframes omegaGlow {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; box-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
+}
+
+/* Footer */
+.lp-footer {
+  margin-top: auto;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 7.5px;
+  letter-spacing: 2px;
+  color: rgba(100, 160, 120, 0.45);
+  padding-top: 14px;
+}
+
+/* ── Golden Koi Easter Egg Tick ─────────────────────────── */
+.koi-hint {
+  color: rgba(160, 220, 200, 0.55);
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  animation: koiHintPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes koiHintPulse {
+  0%   { opacity: 0.45; }
+  100% { opacity: 0.85; }
+}
+
+.koi-found {
+  background: rgba(4, 40, 18, 0.6) !important;
+  border-color: rgba(74, 222, 128, 0.6) !important;
+  box-shadow: 0 0 14px rgba(74, 222, 128, 0.35) !important;
+}
+
+.koi-tick {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #4ade80;
+  font-weight: 800;
+}
+
+.green-tick {
+  display: inline-block;
+  font-size: 16px;
+  animation: tickBounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+             tickGlow 1.5s ease-in-out 0.6s infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes tickBounceIn {
+  0%   { transform: scale(0) rotate(-30deg); opacity: 0; }
+  60%  { transform: scale(1.35) rotate(8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+
+@keyframes tickGlow {
+  0%   { filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.6)); }
+  100% { filter: drop-shadow(0 0 14px rgba(74, 222, 128, 1)); }
+}

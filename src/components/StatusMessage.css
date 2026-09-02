@@ -1,0 +1,47 @@
+.status-wrap {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-msg {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: rgba(148,163,184,0.7);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease;
+}
+
+.status-msg.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.status-msg.urgent {
+  color: #fbbf24;
+  font-size: 13px;
+  text-shadow: 0 0 16px rgba(245,158,11,0.7);
+  animation: urgentFlicker 0.5s ease infinite alternate;
+}
+
+@keyframes urgentFlicker {
+  from { opacity: 0.8; }
+  to { opacity: 1; text-shadow: 0 0 24px rgba(245,158,11,1); }
+}
+
+.status-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(100,116,139,0.4);
+  text-transform: uppercase;
+}
