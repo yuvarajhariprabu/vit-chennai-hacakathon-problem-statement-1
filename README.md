@@ -11,6 +11,20 @@ An enchanted, interactive loading screen and mini-game built with **React** and 
 
 ---
 
+## 🎥 Full Gameplay & Feature Demo Video
+
+Watch the complete 60-second demonstration featuring animal catching, auto-filled color runes, all 3 Easter eggs, the final 5-second countdown, and the photorealistic grassland completion screen:
+
+https://github.com/yuvarajhariprabu/vit-chennai-hacakathon-problem-statement-1/raw/main/demovid.mp4
+
+<video src="demovid.mp4" controls="controls" width="100%" poster="./screenshots/01_main_experience.png">
+  <p>Your browser does not support the video tag. You can <a href="./demovid.mp4">download or watch the demo video here</a>.</p>
+</video>
+
+> 🎬 **Direct Video File**: [Click to watch / download demovid.mp4](./demovid.mp4)
+
+---
+
 ## 📸 Visual Showcase & Screenshots
 
 ### 1. Main Interactive Gameplay Arena
